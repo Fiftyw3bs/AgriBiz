@@ -1,0 +1,111 @@
+
+PATCH http://localhost:8123/Demystify/AntiGhostSystem/employees/1234
+Content-Type: application/json
+
+{
+    "foundational" : {
+        "contactDetails" : {
+            "address" : "Test Address1",
+            "city" : "Test City",
+            "state" : "Test state",
+            "phone" : 41546842,
+            "firstName" : "Test Firstname",
+            "middleName" : "Test MiddleName",
+            "lastName" : "Test Lastname",
+            "postalCode" : 34323
+        },
+        "username" : "femisko",
+        "enabled" : true,
+        "lastSeen" : {
+            "timeString" : "2019-10-10 12:30:30"
+        },
+        "wallet" : {
+            "balance" : 1337
+        },
+        "email" : "testEmail@gg.com",
+        "id" : {
+            "id" : 1234
+        }
+    },
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    }
+}
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/auth
+Content-Type: application/json
+Authorization: Basic YWRzZmRzYWZoamdqaGdqZmRmZHNmYTphZHNmYWRzCg==
+
+{
+
+}
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/auth
+Content-Type: application/json
+
+{
+    "foundational" : {
+        "contactDetails" : {
+            "address" : "Test Address1",
+            "city" : "Test City1",
+            "state" : "Test state1",
+            "phone" : 222222,
+            "firstName" : "Test Firstname1",
+            "middleName" : "Test MiddleName1",
+            "lastName" : "Test Lastname1",
+            "postalCode" : 311111
+        },
+        "username" : "testUsername1",
+        "enabled" : false,
+        "lastSeen" : {
+            "timeString" : "2019-10-10 12:30:30"
+        },
+        "wallet" : {
+            "balance" : 1337331
+        },
+        "email" : "testEmail@gg12.com"
+    },
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    }
+}
+
+
+POST http://localhost:8123/Demystify/AntiGhostSystem/employees/update/74
+Content-Type: application/json
+
+{
+    "foundational" : {
+        "contactDetails" : {
+            "address" : "Test Address",
+            "city" : "Test City",
+            "state" : "Test state",
+            "phone" : 41546842,
+            "firstName" : "Test Firstname",
+            "middleName" : "Test MiddleName",
+            "lastName" : "Test Lastname",
+            "postalCode" : 34323
+        },
+        "username" : "testUsername",
+        "enabled" : true,
+        "lastSeen" : {
+            "timeString" : "2019-10-10 12:30:30"
+        },
+        "wallet" : {
+            "balance" : 1337
+        },
+        "email" : "testEmail@gg.com"
+    },
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    }
+}
+
+DELETE http://localhost:8123/Demystify/AntiGhostSystem/employees/74
+Content-Type: application/json
+
+{
+}

@@ -1,0 +1,48 @@
+
+# Assign
+
+PATCH http://localhost:8123/Demystify/AntiGhostSystem/chips/161
+Content-Type: application/json
+
+{
+    "update_type" : "assign",
+    "chipId" : 169,
+    "userId" : 213
+}
+
+#Add chip
+GET http://localhost:8123/Demystify/AntiGhostSystem/chips
+Content-Type: application/json
+
+{ 
+    "chipToken" : 1337
+}
+
+# Revoke
+
+PATCH http://localhost:8123/Demystify/AntiGhostSystem/chips/<chipId>/revoke/<userId>
+Content-Type: application/json
+
+{
+    "update_type" : "revoke",
+    "chipId" : 10,
+    "userId" : 121
+}
+
+# FetchOne
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/chips/<chipId>
+Content-Type: application/json
+
+{
+    "chipToken" : 1337
+}
+
+#FetchAll
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/chips/
+Content-Type: application/json
+
+{
+    "chipToken" : 1337
+}

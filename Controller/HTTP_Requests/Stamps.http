@@ -1,0 +1,116 @@
+#Add chip
+POST http://localhost:8123/Demystify/AntiGhostSystem/stamps/
+Content-Type: application/json
+
+{ 
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    },
+    "stampId" : {
+        "id" : 12
+    },
+    "stampTime" : {
+        "timeString" : "2019-10-10 12:30:30"
+    },
+    "stampType" : "ARIVAL"
+}
+
+# Fetch By Chip
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/stamps
+Content-Type: application/json
+
+{
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    }
+}
+
+# Fetch By StampId
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/stamps/10
+Content-Type: application/json
+
+{
+}
+
+# Fetch By Chip and range of Timestamp
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/stamps
+Content-Type: application/json
+
+{
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    },
+    "startDate" : {
+        "timeString" : "2019-10-10 12:30:30"
+    },
+    "endDate" : {
+        "timeString" : "2020-04-10 12:30:30"
+    },
+}
+
+# Fetch By range of Timestamp only
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/stamps
+Content-Type: application/json
+
+{
+    "startDate" : {
+        "timeString" : "2019-10-10 12:30:30"
+    },
+    "endDate" : {
+        "timeString" : "2020-04-10 12:30:30"
+    },
+}
+
+# Delete One
+
+DELETE http://localhost:8123/Demystify/AntiGhostSystem/stamps
+Content-Type: application/json
+
+{
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    }
+}
+
+# Delete by chip
+
+DELETE http://localhost:8123/Demystify/AntiGhostSystem/stamps/12
+Content-Type: application/json
+
+{
+}
+
+# Get All
+
+GET http://localhost:8123/Demystify/AntiGhostSystem/stamps/
+Content-Type: application/json
+
+{
+}
+
+# Get One by Chip ID
+
+PATCH http://localhost:8123/Demystify/AntiGhostSystem/stamps?chipToken=10&startTime=123847132&endTime=12321232
+Content-Type: application/json
+
+{
+    "chip" : {
+        "chipToken" : 1337,
+        "chipId" : 10
+    },
+    "stampId" : {
+        "id" : 12
+    },
+    "stampTime" : {
+        "timeString" : "2019-10-10 12:40:30"
+    },
+    "stampType" : "DEPARTURE"
+}
