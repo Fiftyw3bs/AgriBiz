@@ -29,22 +29,12 @@ private:
 
 public:
     MarketPlace();
-    MarketPlace(const float& biddingPrice, const float& quantity, const User bidder);
-    const float biddingPrice() const;
-    const float quantity() const;
-    const User bidder() const;
-    const BidStatus status() const;
-
-    void biddingPrice(const float& biddingPrice);
-    void quantity(const float& quantity);
-    void bidder(const User& bidder);
-    void status(const BidStatus& status);
 
     bool bid(const Bid& bid);
     bool cancelBid(const Bid& bid);
 
-    bool placeOrder(const Bid& bid);
-    bool cancelOrder(const Bid& bid);
+    bool placeOrder(const Order& bid);
+    bool cancelOrder(const Order& bid);
     
     ~MarketPlace();
 };
@@ -54,4 +44,4 @@ public:
 } // namespace demystify
 
 
-#endif // MARKET_PLACEID_HPP_
+#endif // MARKET_PLACE_HPP_

@@ -15,7 +15,7 @@ namespace AgriBiz
 
 enum class OrderStatus
 {
-    COMPLETED,
+    ACCEPTED,
     PENDING,
     COMPLETED,
     SUSPENDED
@@ -30,7 +30,7 @@ private:
     const User& _orderer;
     float _costPerKg;
     float _quantity; // In Kg
-    personal::Location& _location;
+    personal::Location _location;
     Datable _harvestDate;
     std::string _description;
     Datable _dateComplete;
@@ -39,16 +39,14 @@ private:
 
 public:
     Order();
-    Order(const FarmProduce& farmProduce, const float& costPerKg, const User& orderer);
+    Order(const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location);
 
-    void name(const std::string& name);
     void cost(const float& cost);
     void harvestDate(const Datable& harvestDate);
     void location(const Location& location);
     void description(const std::string& descr );
     void completionDate(const Datable& completionDate);
 
-    const std::string name() const;
     const float cost() const;
     const Datable harvestDate() const;
     const std::string description() const;

@@ -3,37 +3,33 @@
 #include <type_traits>
 
 using namespace demystify;
-using namespace ::ASUnity;
+using namespace AgriBiz;
 using namespace demystify::personal;
 
 
 Order::Order() 
-    : : _farmProduce{FarmProduce("Null")}, _costPerKg{0}, _orderer{User()}
+    : _farmProduce{FarmProduce("Null")}, _costPerKg{0}, _orderer{User()}, _location{Location(0, 0)}
 {
 }
-Order::Order(const FarmProduce& farmProduce, const float& costPerKg, const User& orderer) 
-    : _farmProduce{farmProduce}, _costPerKg{costPerKg}, _orderer{orderer}
+Order::Order(const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location) 
+    : _farmProduce{farmProduce}, _costPerKg{costPerKg}, _orderer{orderer}, _location{location}
 {
-}
-void Order::name(const std::string& name)
-{
-    this->name = name;
 }
 void Order::cost(const float& cost)
 {
-    this->cost = cost;
+    this->_cost = cost;
 }
 void Order::location(const Location& location)
 {
-    this->location = location;
+    this->_location = location;
 }
 void Order::description(const std::string& descr )
 {
-    this->description = descr;
+    this->_description = descr;
 }
 void Order::harvestDate(const Datable& harvestDate )
 {
-    this->harvestDate = harvestDate;
+    this->_harvestDate = harvestDate;
 }
 void Order::harvestDate(const Datable& harvestDate)
 {
@@ -43,29 +39,24 @@ void Order::completionDate(const Datable& completionDate)
 {
     this->_dateComplete = completionDate;
 }
-const std::string Order::name() const
-{
-    return this->name;
-}
-
 const float Order::cost() const
 {
-    return this->cost;
+    return this->_cost;
 }
 
 const Datable Order::harvestDate() const
 {
-    return this->harvestDate;
+    return this->_harvestDate;
 }
 
 const std::string Order::description() const
 {
-    return this->description;
+    return this->_description;
 }
 
 const Location& Order::location() const
 {
-    return this->location;
+    return this->_location;
 }
 const Datable Order::completionDate() const
 {
@@ -77,7 +68,7 @@ const User& orderer Order::orderer() const
 }
 const FarmProduce& Order::farmProduce() const
 {
-    return this->farmProduce;
+    return this->_farmProduce;
 }
 const float Order::quantity() const
 {
