@@ -1,0 +1,7 @@
+[
+    {
+      "directory": "../build/",
+      "command": "c++  -DHAVE_PCAP -DPACKAGE_VERSION=\\\"0.7.0+6+g49ee04a\\\" -DPACKAGE_VERSION_MAJOR=0 -DPACKAGE_VERSION_MINOR=7 -DPACKAGE_VERSION_PATCH=0 -DPROJECT_VERSION=\\\"0.7.0\\\" -DPROJECT_VERSION_INT=700 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -I/home/ruess/code/rcdiscover -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -O3 -DNDEBUG   -Wall -std=c++11 -funroll-loops -o CMakeFiles/rcdiscover_static.dir/deviceinfo.cc.o -c /home/ruess/code/rcdiscover/rcdiscover/deviceinfo.cc",
+      "file": "/home/ruess/code/rcdiscover/rcdiscover/deviceinfo.cc"
+    }
+]
