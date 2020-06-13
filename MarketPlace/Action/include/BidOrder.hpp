@@ -1,38 +1,33 @@
-#ifndef ACCEPT_INTERESTED_PARTY_HPP_
-#define ACCEPT_INTERESTED_PARTY_HPP_
+#ifndef BID_ORDER_HPP_
+#define BID_ORDER_HPP_
 
-#include "LandlordAction.hpp"
+#include "Order.hpp"
+#include "Bid.hpp"
 
 namespace demystify
 {
-namespace ASUnity
+namespace AgriBiz
 {
 
 namespace action {
 
-class AcceptInterestedParty : public LandlordAction
+class BidOrder : public IAction
 {
 private:
-    /* data */
+    const Bid& _bid;
+    Order& _order;
 public:
-    AcceptInterestedParty(/* args */);
-    ~AcceptInterestedParty();
+    BidOrder(const Bid& bid, Order& order);
+    bool perform();
+    ~BidOrder();
 };
-
-AcceptInterestedParty::AcceptInterestedParty(/* args */)
-{
-}
-
-AcceptInterestedParty::~AcceptInterestedParty()
-{
-}
 
 
 } // action
 
-} // namespace ASUnity
+} // namespace AgriBiz
 
 } // namespace demystify
 
 
-#endif //ACCEPT_INTERESTED_PARTY_HPP_
+#endif //BID_ORDER_HPP_
