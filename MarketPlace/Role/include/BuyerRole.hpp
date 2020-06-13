@@ -1,20 +1,20 @@
-#ifndef LANDLORD_ROLE_HPP_
-#define LANDLORD_ROLE_HPP_
+#ifndef BUYER_ROLE_HPP_
+#define BUYER_ROLE_HPP_
 
 #include "IRole.hpp"
 
 namespace demystify
 {
 
-namespace ASUnity
+namespace AgriBiz
 {
 
-class LandlordRole : public IRole
+class BuyerRole : public IRole
 {
 public:
     const std::string name() const
     {
-        return "Landlord";
+        return "Buyer";
     }
 
 };
@@ -23,4 +23,4 @@ public:
 
 }
 
-#endif //LANDLORD_ROLE_HPP_
+#endif //BUYER_ROLE_HPP_
