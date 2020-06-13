@@ -11,14 +11,14 @@ set(CONTROLLER_PATH "${PROJECT_SOURCE_DIR}/Controller")
 # set(HEADER_LIST "${ModernCMakeExample_SOURCE_DIR}/include/modern/lib.hpp")
 
 # Make an automatic library - will be static or dynamic based on user setting
-add_library(AntiGhost_Controller_Lib main.cpp ${SOURCE_LIST})
+add_library(AgriBiz_Controller_Lib main.cpp ${SOURCE_LIST})
 
 # We need this directory, and users of our library will need it too
-target_include_directories(AntiGhost_Controller_Lib PUBLIC ${HEADER_LIST} ${CONTROLLER_PATH})
+target_include_directories(AgriBiz_Controller_Lib PUBLIC ${HEADER_LIST} ${CONTROLLER_PATH})
 
 # This depends on (header only) boost
-target_link_libraries(AntiGhost_Controller_Lib PUBLIC AntiGhost_Model_Lib AntiGhost_Persistence_Lib)
-# target_link_libraries(AntiGhost_Controller_Lib PUBLIC Model_Lib)
+target_link_libraries(AgriBiz_Controller_Lib PUBLIC AgriBiz_Model_Lib AgriBiz_Persistence_Lib)
+# target_link_libraries(AgriBiz_Controller_Lib PUBLIC Model_Lib)
 
 # IDEs should put the headers in a nice place
 source_group(TREE "${PROJECT_SOURCE_DIR}/" PREFIX "Header Files" FILES ${HEADER_LIST})
