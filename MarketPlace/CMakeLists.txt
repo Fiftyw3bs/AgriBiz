@@ -6,7 +6,7 @@ file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/MarketPlace/*/inc
 file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/MarketPlace/*/src/*.cpp")
 set(REALESTATE_PATH "${PROJECT_SOURCE_DIR}/MarketPlace/")
 
-add_subdirectory(Persistence)
+# add_subdirectory(Persistence)
 add_subdirectory(Model)
 
 # Make an automatic library - will be static or dynamic based on user setting
