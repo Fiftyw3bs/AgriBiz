@@ -1,11 +1,11 @@
-#include "EditOrder.hpp"
+#include "PostOrder.hpp"
 
 using namespace demystify;
 using namespace AgriBiz;
 using namespace action;
 
 
-EditOrder::EditOrder(const Order& order) : _order{order}
+PostOrder::PostOrder(const Order& order) : _order{order}
 {
 
 }

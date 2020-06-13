@@ -1,38 +1,31 @@
-#ifndef DELETE_AD_HPP_
-#define DELETE_AD_HPP_
+#ifndef DELETE_ORDER_HPP_
+#define DELETE_ORDER_HPP_
 
-#include "LandlordAction.hpp"
+#include "IAction.hpp"
+#include "Order.hpp"
 
 namespace demystify
 {
-namespace ASUnity
+namespace AgriBiz
 {
 
 namespace action {
 
-class DeleteAd : public LandlordAction
+class DeleteOrder : public IAction
 {
 private:
-    /* data */
+    Order _order;
 public:
-    DeleteAd(/* args */);
-    ~DeleteAd();
+    DeleteOrder(const Order& order);
+    bool perform();
+    ~DeleteOrder();
 };
-
-DeleteAd::DeleteAd(/* args */)
-{
-}
-
-DeleteAd::~DeleteAd()
-{
-}
-
 
 } // action
 
-} // namespace ASUnity
+} // namespace AgriBiz
 
 } // namespace demystify
 
 
-#endif //DELETE_AD_HPP_
+#endif //DELETE_ORDER_HPP_

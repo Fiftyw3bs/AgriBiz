@@ -1,38 +1,31 @@
-#ifndef EDIT_AD_HPP_
-#define EDIT_AD_HPP_
+#ifndef EDIT_ORDER_HPP_
+#define EDIT_ORDER_HPP_
 
-#include "LandlordAction.hpp"
+#include "IAction.hpp"
+#include "Order.hpp"
 
 namespace demystify
 {
-namespace ASUnity
+namespace AgriBiz
 {
 
 namespace action {
 
-class EditAd : public LandlordAction
+class EditOrder : public IAction
 {
 private:
-    /* data */
+    Order _order;
 public:
-    EditAd(/* args */);
-    ~EditAd();
+    EditOrder(const Order& order);
+    bool perform();
+    ~EditOrder();
 };
-
-EditAd::EditAd(/* args */)
-{
-}
-
-EditAd::~EditAd()
-{
-}
-
 
 } // action
 
-} // namespace ASUnity
+} // namespace AgriBiz
 
 } // namespace demystify
 
 
-#endif //EDIT_AD_HPP_
+#endif //EDIT_ORDER_HPP_

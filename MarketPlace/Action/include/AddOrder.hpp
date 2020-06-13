@@ -1,8 +1,8 @@
-#ifndef BID_ORDER_HPP_
-#define BID_ORDER_HPP_
+#ifndef ADD_ORDER_HPP_
+#define ADD_ORDER_HPP_
 
+#include "IAction.hpp"
 #include "Order.hpp"
-#include "Bid.hpp"
 
 namespace demystify
 {
@@ -11,17 +11,15 @@ namespace AgriBiz
 
 namespace action {
 
-class BidOrder : public IAction
+class AddOrder : public IAction
 {
 private:
-    const Bid& _bid;
     Order _order;
 public:
-    BidOrder(const Bid& bid, Order& order);
+    AddOrder(const Order& order);
     bool perform();
-    ~BidOrder();
+    ~AddOrder();
 };
-
 
 } // action
 
@@ -30,4 +28,4 @@ public:
 } // namespace demystify
 
 
-#endif //BID_ORDER_HPP_
+#endif //ADD_ORDER_HPP_
