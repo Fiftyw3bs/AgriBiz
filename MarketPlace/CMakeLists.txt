@@ -8,6 +8,8 @@ set(REALESTATE_PATH "${PROJECT_SOURCE_DIR}/MarketPlace/")
 
 # add_subdirectory(Persistence)
 add_subdirectory(Model)
+add_subdirectory(Controller)
+add_subdirectory(Action)
 
 # Make an automatic library - will be static or dynamic based on user setting
 add_library(AgriBiz_Market_Lib main.cpp ${SOURCE_LIST})
