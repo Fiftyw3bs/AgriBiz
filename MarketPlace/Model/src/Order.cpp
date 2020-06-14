@@ -74,7 +74,7 @@ const float Order::totalCost(const float& quantity, const float& costPerKg) cons
 {
     return quantity * costPerKg;
 }
-OrderType Order::orderType() const
+OrderType Order::type() const
 {
     return this->_orderType;
 }
@@ -82,7 +82,23 @@ OrderStatus Order::status() const
 {
     return this->_status;
 }
-OrderStatus Order::status(const OrderStatus& status)
+void Order::status(const OrderStatus& status)
 {
     this->_status = status;
+}
+void Order::orderer(const User& orderer)
+{
+    this->_orderer = orderer;
+}
+void Order::farmProduce(const FarmProduce& farmProduce)
+{
+    this->_farmProduce = farmProduce;
+}
+void Order::quantity(const float& quantity)
+{
+    this->_quantity = quantity;
+}
+void Order::type(const OrderType& type)
+{
+    this->_orderType = type;
 }

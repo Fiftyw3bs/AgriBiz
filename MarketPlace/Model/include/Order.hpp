@@ -4,7 +4,6 @@
 #include "Models.hpp"
 #include "Bid.hpp"
 #include "FarmProduce.hpp"
-#include "MarketPlace.hpp"
 
 #include <string>
 
@@ -12,6 +11,11 @@ namespace demystify
 {
 namespace AgriBiz
 {
+
+namespace persistence
+{
+    class OrderCRUD;
+}
 
 enum class OrderStatus
 {
@@ -34,7 +38,7 @@ class Order : public Identifiable, public Datable, private Subscribable<Bid>
 {
 private:
     FarmProduce _farmProduce;
-    const User& _orderer;
+    User _orderer;
     float _costPerKg;
     float _quantity; // In Kg
     personal::Location _location;
@@ -44,22 +48,26 @@ private:
     OrderType _orderType;
     OrderStatus _status;
 
-    OrderStatus status() const;
-    OrderStatus status(const OrderStatus& status);
     const float totalCost(const float& quantity, const float& costPerKg) const;
  
-    friend class MarketPlace; // Needed to use addSubscriber()
+    friend class OrderCRUD; // Needed to use addSubscriber()
 
 public:
     Order();
     Order(OrderType orderType, const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location);
 
+    void status(const OrderStatus& status);
     void costPerKg(const float& cost);
     void harvestDate(const Datable& harvestDate);
     void location(const Location& location);
     void description(const std::string& descr );
     void completionDate(const Datable& completionDate);
+    void orderer(const User& orderer);
+    void farmProduce(const FarmProduce& farmProduce);
+    void quantity(const float& quantity);
+    void type(const OrderType& type);
 
+    OrderStatus status() const;
     const float costPerKg() const;
     const Datable harvestDate() const;
     const std::string description() const;
@@ -68,7 +76,7 @@ public:
     const User& orderer() const;
     const FarmProduce& farmProduce() const;
     const float quantity() const;
-    OrderType orderType() const;
+    OrderType type() const;
 };
 
 } // namespace AgriBiz

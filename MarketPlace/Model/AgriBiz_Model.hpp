@@ -4,8 +4,8 @@
 #include "Bid.hpp"
 #include "FarmLand.hpp"
 #include "FarmProduce.hpp"
-#include "MarketPlace.hpp"
+// #include "MarketPlace.hpp"
 #include "Order.hpp"
-#include "Rating.hpp"
+// #include "Rating.hpp"
 
 #endif //AGRI_BIZ_HPP_
