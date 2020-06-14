@@ -14,8 +14,6 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/lib/Demystify)
 add_subdirectory(MarketPlace)
 add_subdirectory(Server)
 add_subdirectory(Test)
-add_subdirectory(Persistence)
-add_subdirectory(Controller)
 # add_subdirectory(Factory)
 add_subdirectory(Navigation)
 
