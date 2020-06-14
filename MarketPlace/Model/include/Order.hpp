@@ -18,7 +18,14 @@ enum class OrderStatus
     ACCEPTED,
     PENDING,
     COMPLETED,
-    SUSPENDED
+    SUSPENDED,
+    UNKNOWN
+};
+
+enum class OrderType
+{
+    BUY,
+    SELL
 };
 
 using namespace personal;
@@ -34,27 +41,34 @@ private:
     Datable _harvestDate;
     std::string _description;
     Datable _dateComplete;
-    const float getTotalCost(const float& quantity, const float& costPerKg) const;
+    OrderType _orderType;
+    OrderStatus _status;
+
+    OrderStatus status() const;
+    OrderStatus status(const OrderStatus& status);
+    const float totalCost(const float& quantity, const float& costPerKg) const;
+ 
     friend class MarketPlace; // Needed to use addSubscriber()
 
 public:
     Order();
-    Order(const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location);
+    Order(OrderType orderType, const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location);
 
-    void cost(const float& cost);
+    void costPerKg(const float& cost);
     void harvestDate(const Datable& harvestDate);
     void location(const Location& location);
     void description(const std::string& descr );
     void completionDate(const Datable& completionDate);
 
-    const float cost() const;
+    const float costPerKg() const;
     const Datable harvestDate() const;
     const std::string description() const;
     const Location& location() const;
-    const Datable completionDate(const Datable& completionDate) const;
+    const Datable completionDate() const;
     const User& orderer() const;
     const FarmProduce& farmProduce() const;
     const float quantity() const;
+    OrderType orderType() const;
 };
 
 } // namespace AgriBiz

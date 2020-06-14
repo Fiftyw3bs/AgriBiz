@@ -21,7 +21,7 @@ const float Bid::quantity() const
 {
     return this->_quantity;
 }
-const User Bid::bidder() const
+const User& Bid::bidder() const
 {
     return this->_bidder;
 }

@@ -4,39 +4,79 @@ using namespace demystify;
 using namespace AgriBiz;
 using namespace personal;
 
-MarketPlace::MarketPlace() : _biddingPrice{0}, _quantity{0}, _bidder{User()}
+MarketPlace::MarketPlace()
 {
 
 }
 
-bool MarketPlace::bid(const Bid& bid, const Order& order)
+bool MarketPlace::bid(const PointerOf<Bid>& bid, const PointerOf<Order>& order)
 {
     bool success = false;
 
-    // auto bidPtr = MakePointerOf<Bid>(bid);
-
-    if (bid.bidder() != order) // Owner of Order can't bid for his own Order
+    if (bid->bidder() != order->orderer())
     {
-        if (bid.quantity() <= order.quantity()) // Offered quantity cannot exceed what is ordered
+        if (bid->quantity() <= order->quantity())
         {
-            success = this->addSubscriber(MakePointerOf<Bid>(bid));
+            success = order->addSubscriber(bid);
         }
+        else
+        {
+            // Offered quantity cannot exceed what is ordered
+        }
+    }
+    else
+    {
+        // Owner of Order can't bid for his own Order
     }
     
     return success;
     
 }
 
-bool MarketPlace::cancelBid(const Bid& bid)
+bool MarketPlace::cancelBid(const PointerOf<Bid>& bid, const PointerOf<Order>& order)
+{
+    return order->removeSubscriber(bid);
+}
+
+bool MarketPlace::placeOrder(const PointerOf<Order>& order)
 {
 
 }
-
-bool MarketPlace::placeOrder(const Order& bid)
+bool MarketPlace::cancelOrder(const PointerOf<Order>& order)
 {
 
 }
-bool MarketPlace::cancelOrder(const Order& bid)
+bool MarketPlace::contactOrderer(const PointerOf<User>& sender, const PointerOf<Order>& order)
 {
 
+}
+bool MarketPlace::report(const PointerOf<User>& reporter, const PointerOf<Order>& order)
+{
+
+}
+VectorOf<Order> MarketPlace::orders(OrderStatus orderStatus)
+{
+    VectorOf<Order> orders;
+
+    if (!this->getSubscribers().empty())
+    {
+        for(auto &orderPtr : this->getSubscribers())
+        {
+            if (auto order = orderPtr.lock(); order->status() == orderStatus)
+            {
+                orders.push_back(*order);
+            } else if (orderStatus == OrderStatus::UNKNOWN)
+            {
+                orders.push_back(*order);
+            } else
+            {
+                // Do Nothing!
+            }
+        }    
+    } else
+    {
+        orders.push_back(Order());
+    }
+
+    return orders;    
 }

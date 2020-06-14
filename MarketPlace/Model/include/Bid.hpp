@@ -42,14 +42,14 @@ public:
     Bid(const float& biddingPrice, const float& quantity, const User& bidder);
     const float biddingPrice() const;
     const float quantity() const;
-    const User bidder() const;
+    const User& bidder() const;
     const BidStatus status() const;
 
     void biddingPrice(const float& biddingPrice);
     void quantity(const float& quantity);
     void bidder(const User& bidder);
     
-    ~Bid();
+    // ~Bid();
 };
 
 } // namespace AgriBiz
