@@ -3,6 +3,7 @@
 
 #include "IAction.hpp"
 #include "Order.hpp"
+#include "PGPool.hpp"
 
 namespace demystify
 {
@@ -15,8 +16,9 @@ class AddOrder : public IAction
 {
 private:
     Order _order;
+    PGPoolPtr _pgPool;
 public:
-    AddOrder(const Order& order);
+    AddOrder(const Order& order, PGPoolPtr pgPool);
     bool perform();
     ~AddOrder();
 };
