@@ -3,6 +3,7 @@
 
 #include "IAction.hpp"
 #include "Order.hpp"
+#include "PGPool.hpp"
 
 namespace demystify
 {
@@ -10,6 +11,8 @@ namespace AgriBiz
 {
 
 namespace action {
+
+using namespace persistence;
 
 class EditOrder : public IAction
 {

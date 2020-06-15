@@ -3,6 +3,7 @@
 
 #include "Order.hpp"
 #include "Bid.hpp"
+#include "PGPool.hpp"
 
 namespace demystify
 {
@@ -11,13 +12,15 @@ namespace AgriBiz
 
 namespace action {
 
+using namespace persistence;
+
 class BidOrder : public IAction
 {
 private:
     const Bid& _bid;
     Order _order;
 public:
-    BidOrder(const Bid& bid, Order& order);
+    BidOrder(const Bid& bid, Order& order, PGPoolPtr pgPool);
     bool perform();
     ~BidOrder();
 };

@@ -7,8 +7,8 @@
 # Optionally glob, but only for CMake 3.12 or later:
 # file(GLOB M_HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Action/include")
 set(ACTION_PATH "${PROJECT_SOURCE_DIR}/MarketPlace/Action/")
-file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${ACTION_PATH}/include")
-file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${ACTION_PATH}/src/*.cpp")
+file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${ACTION_PATH}/include/**")
+file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${ACTION_PATH}/src/*/*.cpp")
 # set(HEADER_LIST "${ModernCMakeExample_SOURCE_DIR}/include/modern/lib.hpp")
 
 # Make an automatic library - will be static or dynamic based on user setting
@@ -18,7 +18,7 @@ add_library(AgriBiz_Action_Lib main.cpp ${SOURCE_LIST})
 target_include_directories(AgriBiz_Action_Lib PUBLIC ${P_HEADER_LIST} ${ACTION_PATH})
 
 # This depends on (header only) boost
-target_link_libraries(AgriBiz_Action_Lib PUBLIC Action_Lib)
+target_link_libraries(AgriBiz_Action_Lib PUBLIC AgriBiz_Persistence_Lib)
 
 # IDEs should put the headers in a nice place
 source_group(TREE "${PROJECT_SOURCE_DIR}/" PREFIX "Header Files" FILES ${P_HEADER_LIST})

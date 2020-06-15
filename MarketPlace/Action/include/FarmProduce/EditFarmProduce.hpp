@@ -1,5 +1,5 @@
-#ifndef ADD_ORDER_HPP_
-#define ADD_ORDER_HPP_
+#ifndef EDIT_ORDER_HPP_
+#define EDIT_ORDER_HPP_
 
 #include "IAction.hpp"
 #include "Order.hpp"
@@ -12,15 +12,16 @@ namespace AgriBiz
 
 namespace action {
 
-class AddOrder : public IAction
+using namespace persistence;
+
+class EditOrder : public IAction
 {
 private:
     Order _order;
-    PGPoolPtr _pgPool;
 public:
-    AddOrder(const Order& order, PGPoolPtr pgPool);
+    EditOrder(const Order& order);
     bool perform();
-    ~AddOrder();
+    ~EditOrder();
 };
 
 } // action
@@ -30,4 +31,4 @@ public:
 } // namespace demystify
 
 
-#endif //ADD_ORDER_HPP_
+#endif //EDIT_ORDER_HPP_
