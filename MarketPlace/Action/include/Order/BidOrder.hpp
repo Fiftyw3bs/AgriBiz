@@ -3,7 +3,7 @@
 
 #include "Order.hpp"
 #include "Bid.hpp"
-#include "PGPool.hpp"
+#include "OrderCRUD.hpp"
 
 namespace demystify
 {
@@ -19,6 +19,7 @@ class BidOrder : public IAction
 private:
     const Bid& _bid;
     Order _order;
+    PGPoolPtr _pgPool;
 public:
     BidOrder(const Bid& bid, Order& order, PGPoolPtr pgPool);
     bool perform();

@@ -3,7 +3,7 @@
 
 #include "IAction.hpp"
 #include "Bid.hpp"
-#include "PGPool.hpp"
+#include "BidCRUD.hpp"
 
 namespace demystify
 {
@@ -18,9 +18,11 @@ class AddBid : public IAction
 private:
     Bid _bid;
     PGPoolPtr _pgPool;
+    BidID _bidId;
 public:
     AddBid(const Bid& bid, PGPoolPtr pgPool);
     bool perform();
+    BidID result();
     ~AddBid();
 };
 

@@ -1,27 +1,27 @@
-#ifndef EDIT_ORDER_HPP_
-#define EDIT_ORDER_HPP_
+#ifndef EDIT_FarmProduce_HPP_
+#define EDIT_FarmProduce_HPP_
 
 #include "IAction.hpp"
-#include "Order.hpp"
-#include "PGPool.hpp"
+#include "FarmProduce.hpp"
+#include "FarmProduceCRUD.hpp"
 
 namespace demystify
 {
 namespace AgriBiz
 {
-
 namespace action {
 
 using namespace persistence;
 
-class EditOrder : public IAction
+class EditFarmProduce : public IAction
 {
 private:
-    Order _order;
+    FarmProduce _farmProduce;
+    PGPoolPtr _pgPool;
 public:
-    EditOrder(const Order& order);
+    EditFarmProduce(const FarmProduce& farmProduce, PGPoolPtr pgPool);
     bool perform();
-    ~EditOrder();
+    ~EditFarmProduce();
 };
 
 } // action
@@ -31,4 +31,4 @@ public:
 } // namespace demystify
 
 
-#endif //EDIT_ORDER_HPP_
+#endif //EDIT_FarmProduce_HPP_

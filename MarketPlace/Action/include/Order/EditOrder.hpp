@@ -3,7 +3,7 @@
 
 #include "IAction.hpp"
 #include "Order.hpp"
-#include "PGPool.hpp"
+#include "OrderCRUD.hpp"
 
 namespace demystify
 {
@@ -18,8 +18,9 @@ class EditOrder : public IAction
 {
 private:
     Order _order;
+    PGPoolPtr _pgPool;
 public:
-    EditOrder(const Order& order);
+    EditOrder(const Order& order, PGPoolPtr pgPool);
     bool perform();
     ~EditOrder();
 };

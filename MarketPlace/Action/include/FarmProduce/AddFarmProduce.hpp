@@ -1,9 +1,9 @@
-#ifndef ADD_ORDER_HPP_
-#define ADD_ORDER_HPP_
+#ifndef ADD_FARMPRODUCE_HPP_
+#define ADD_FARMPRODUCE_HPP_
 
 #include "IAction.hpp"
-#include "Order.hpp"
-#include "PGPool.hpp"
+#include "FarmProduce.hpp"
+#include "FarmProduceCRUD.hpp"
 
 namespace demystify
 {
@@ -13,15 +13,17 @@ namespace action {
 
 using namespace persistence;
 
-class AddOrder : public IAction
+class AddFarmProduce : public IAction
 {
 private:
-    Order _order;
+    FarmProduce _FarmProduce;
+    FarmProduceID _farmProduceId;
     PGPoolPtr _pgPool;
 public:
-    AddOrder(const Order& order, PGPoolPtr pgPool);
+    AddFarmProduce(const FarmProduce& FarmProduce, PGPoolPtr pgPool);
     bool perform();
-    ~AddOrder();
+    FarmProduceID result();
+    ~AddFarmProduce();
 };
 
 } // action
@@ -31,4 +33,4 @@ public:
 } // namespace demystify
 
 
-#endif //ADD_ORDER_HPP_
+#endif //ADD_FARMPRODUCE_HPP_

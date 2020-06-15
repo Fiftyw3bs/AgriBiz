@@ -1,9 +1,9 @@
-#ifndef ADD_BID_HPP_
-#define ADD_BID_HPP_
+#ifndef EDIT_BID_HPP_
+#define EDIT_BID_HPP_
 
 #include "IAction.hpp"
 #include "Bid.hpp"
-#include "PGPool.hpp"
+#include "BidCRUD.hpp"
 
 namespace demystify
 {
@@ -13,15 +13,15 @@ namespace action {
 
 using namespace persistence;
 
-class AddBid : public IAction
+class EditBid : public IAction
 {
 private:
     Bid _bid;
     PGPoolPtr _pgPool;
 public:
-    AddBid(const Bid& bid, PGPoolPtr pgPool);
+    EditBid(const Bid& bid, PGPoolPtr pgPool);
     bool perform();
-    ~AddBid();
+    ~EditBid();
 };
 
 } // action
@@ -31,4 +31,4 @@ public:
 } // namespace demystify
 
 
-#endif //ADD_BID_HPP_
+#endif //EDIT_BID_HPP_

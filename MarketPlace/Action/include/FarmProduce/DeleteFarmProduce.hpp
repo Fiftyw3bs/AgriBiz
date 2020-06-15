@@ -1,9 +1,9 @@
-#ifndef DELETE_ORDER_HPP_
-#define DELETE_ORDER_HPP_
+#ifndef DELETE_FarmProduce_HPP_
+#define DELETE_FarmProduce_HPP_
 
 #include "IAction.hpp"
-#include "Order.hpp"
-#include "PGPool.hpp"
+#include "FarmProduce.hpp"
+#include "FarmProduceCRUD.hpp"
 
 namespace demystify
 {
@@ -14,14 +14,15 @@ namespace action {
 
 using namespace persistence;
 
-class DeleteOrder : public IAction
+class DeleteFarmProduce : public IAction
 {
 private:
-    Order _order;
+    FarmProduce _farmProduce;
+    PGPoolPtr _pgPool;
 public:
-    DeleteOrder(const Order& order);
+    DeleteFarmProduce(const FarmProduce& FarmProduce, PGPoolPtr pgPool);
     bool perform();
-    ~DeleteOrder();
+    ~DeleteFarmProduce();
 };
 
 } // action
@@ -31,4 +32,4 @@ public:
 } // namespace demystify
 
 
-#endif //DELETE_ORDER_HPP_
+#endif //DELETE_FarmProduce_HPP_

@@ -3,7 +3,7 @@
 
 #include "IAction.hpp"
 #include "Bid.hpp"
-#include "PGPool.hpp"
+#include "BidCRUD.hpp"
 
 namespace demystify
 {
@@ -18,8 +18,9 @@ class DeleteBid : public IAction
 {
 private:
     Bid _bid;
+    PGPoolPtr _pgPool;
 public:
-    DeleteBid(const Bid& bid);
+    DeleteBid(const Bid& bid, PGPoolPtr pgPool);
     bool perform();
     ~DeleteBid();
 };

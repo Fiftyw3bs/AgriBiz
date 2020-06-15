@@ -4,12 +4,12 @@ using namespace demystify;
 using namespace AgriBiz;
 using namespace action;
 
-
-EditOrder::EditOrder(const Order& order) : _order{order}
+EditOrder::EditOrder(const Order& order, PGPoolPtr pgPool) : _order{order}, _pgPool{pgPool}
 {
-
 }
-bool perform()
-{
 
+bool EditOrder::perform()
+{
+    auto OrderDbo = OrderCRUD(this->_pgPool);
+    return OrderDbo.update(this->_order);
 }

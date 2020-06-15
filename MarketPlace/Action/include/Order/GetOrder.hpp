@@ -1,9 +1,9 @@
-#ifndef EDIT_ORDER_HPP_
-#define EDIT_ORDER_HPP_
+#ifndef GET_ORDER_HPP_
+#define GET_ORDER_HPP_
 
 #include "IAction.hpp"
 #include "Order.hpp"
-#include "PGPool.hpp"
+#include "OrderCRUD.hpp"
 
 namespace demystify
 {
@@ -14,14 +14,16 @@ namespace action {
 
 using namespace persistence;
 
-class EditOrder : public IAction
+class GetOrder : public IAction
 {
 private:
     Order _order;
+    PGPoolPtr _pgPool;
 public:
-    EditOrder(const Order& order);
+    GetOrder(const Order& order, PGPoolPtr pgPool);
     bool perform();
-    ~EditOrder();
+    Order result();
+    ~GetOrder();
 };
 
 } // action
@@ -31,4 +33,4 @@ public:
 } // namespace demystify
 
 
-#endif //EDIT_ORDER_HPP_
+#endif //GET_ORDER_HPP_

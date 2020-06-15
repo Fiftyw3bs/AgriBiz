@@ -3,7 +3,7 @@
 
 #include "IAction.hpp"
 #include "Order.hpp"
-#include "PGPool.hpp"
+#include "OrderCRUD.hpp"
 
 namespace demystify
 {
@@ -18,8 +18,9 @@ class DeleteOrder : public IAction
 {
 private:
     Order _order;
+    PGPoolPtr _pgPool;
 public:
-    DeleteOrder(const Order& order);
+    DeleteOrder(const Order& order, PGPoolPtr pgPool);
     bool perform();
     ~DeleteOrder();
 };
