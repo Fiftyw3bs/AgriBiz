@@ -17,12 +17,15 @@ using namespace persistence;
 class GetOrder : public IAction
 {
 private:
-    Order _order;
+    VectorOf<Order> _order;
     PGPoolPtr _pgPool;
+    Offset _offset;
+    Limit _limit;
 public:
-    GetOrder(const Order& order, PGPoolPtr pgPool);
+    GetOrder(const Order& order, PGPoolPtr pgPool, Offset offset = 0, Limit limit = 1);
     bool perform();
     Order result();
+    VectorOf<Order> result(Multiple);
     ~GetOrder();
 };
 

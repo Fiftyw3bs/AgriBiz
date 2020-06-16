@@ -102,3 +102,7 @@ void Order::type(const OrderType& type)
 {
     this->_orderType = type;
 }
+const User& Order::orderer()
+{
+    return this->_orderer;
+}

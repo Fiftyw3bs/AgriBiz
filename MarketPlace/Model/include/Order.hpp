@@ -74,6 +74,7 @@ public:
     const Location& location() const;
     const Datable completionDate() const;
     const User& orderer() const;
+    const User& orderer();
     const FarmProduce& farmProduce() const;
     const float quantity() const;
     OrderType type() const;
