@@ -16,7 +16,8 @@ BidID BidCRUD::add(const Bid& bid)
         "BID_CREATE",
         bid.biddingPrice(),
         bid.quantity(),
-        bid.status(),
+        bid.quantity(),
+        // bid.status(),
         bid.getTimeString(),
         bid.bidder().getId()
     );
@@ -43,7 +44,8 @@ bool BidCRUD::update(const Bid& bid)
         "BID_MODIFY",
         bid.biddingPrice(),
         bid.quantity(),
-        bid.status(),
+        bid.quantity(),
+        // bid.status(),
         bid.getId()
     ).empty();
 }
@@ -74,7 +76,8 @@ VectorOf<Bid> BidCRUD::processFetched(const result res)
             User tUser;
             tUser.setId(row["bidder_id"].as<UserID>());
             tmpBid.bidder(tUser);
-            tmpBid.status(row["bid_status"].as<BidStatus>());
+            // cout << "Bid Status: " << row["bid_status"].as<uint32_t>() << endl;
+            tmpBid.status();
             tmpBids.push_back(tmpBid);
         }
     }

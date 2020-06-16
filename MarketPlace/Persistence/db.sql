@@ -286,5 +286,6 @@ CREATE TABLE IF NOT EXISTS Order (
 
 CREATE TABLE IF NOT EXISTS Bid_Order (
     bid_id INT NOT NULL REFERENCES Bid(bid_id) ON DELETE CASCADE,
-    order_id INT NOT NULL REFERENCES Order(order_id ON DELETE CASCADE)
+    order_id INT NOT NULL REFERENCES Order(order_id) ON DELETE CASCADE,
+    PRIMARY KEY(bid_id, order_id)
 );

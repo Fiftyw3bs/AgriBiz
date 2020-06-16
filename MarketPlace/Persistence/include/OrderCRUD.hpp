@@ -12,6 +12,7 @@
 #define ORDER_CRUD_HPP_
 
 #include "Order.hpp"
+#include "Bid.hpp"
 #include "User.hpp"
 #include "GenericCRUD.hpp"
 
@@ -43,6 +44,7 @@ public:
     OrderID add(const Order& Order);
     bool remove(const Order& OrderId);
     bool update(const Order& Order);
+    bool assignBid(const Bid& bid, const Order& Order);
     Order fetch(const Order& Order);
     // VectorOf<Order> fetch(const OrderStatus& status, const Offset& offset, const Limit& limit);
     // VectorOf<Order> fetch(const Order& order, const Offset& offset, const Limit& limit);

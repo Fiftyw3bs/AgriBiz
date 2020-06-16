@@ -122,6 +122,16 @@ VectorOf<Order> OrderCRUD::processFetched(const result& res)
 
     return tmpOrders;
 }
+
+bool OrderCRUD::assignBid(const Bid& bid, const Order& order)
+{
+    return this->performDBOperation(
+        "Order_ASSIGN_BID",
+        bid.getId(),
+        order.getId()
+    ).empty();
+}
+
 DBStatements OrderCRUD::crudStatements{
     {"ORDER_FETCH_ALL_BY_CONSTRAINT", 
         "SELECT \
@@ -144,5 +154,6 @@ DBStatements OrderCRUD::crudStatements{
     },
     {"Order_CREATE", "INSERT INTO Order (order_id, orderer_id, cost_per_kg, quantity, location_id, harvest_date, date_posted, description, date_complete, order_type, order_status) VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING order_id"},
     {"Order_REMOVE_ONE_BY_ID", "DELETE FROM Order WHERE order_id = $1"},
+    {"Order_ASSIGN_BID", "INSERT INTO Bid_Order (bid_id, order_id) VALUES ($1, $2)"},
     {"Order_MODIFY", "UPDATE Order SET cost_per_kg=$1, quantity=$2, location_id=$3, harvest_date=$4, description=$5, date_complete=$6, order_type=$7, order_status=$8 WHERE order_id=$9"}
 };
