@@ -1,21 +1,21 @@
-#ifndef STAMP_CONTROLLER_HPP_
-#define STAMP_CONTROLLER_HPP_
+#ifndef BID_CONTROLLER_HPP_
+#define BID_CONTROLLER_HPP_
 
-#include "AGW_Persistence.hpp"
+#include "AgriBiz_Persistence.hpp"
 #include "Controller_Impl.hpp"
-#include "ChipController.hpp"
 #include "JsonConversion.hpp"
+#include "Bid.hpp"
 
 using namespace demystify;
 
-using StampController = demystify::subsystem::AntiGhostWorker::Controller<StampCRUD>;
+using BidController = demystify::AgriBiz::controller::Controller<BidCRUD>;
 
 namespace demystify::JsonConversion
 {
-    using namespace subsystem::AntiGhostWorker;
-    web::json::value StampAsJSON(const Stamp& stamp);
-    Stamp StampFromJSON(const web::json::value& stampJson);
+    using namespace AgriBiz;
+    web::json::value BidAsJSON(const Bid& bid);
+    Bid BidFromJSON(const web::json::value& bidJson);
 } // namespace JsonConversion
 
 
-#endif //STAMP_CONTROLLER_HPP_
+#endif //BID_CONTROLLER_HPP_

@@ -1,20 +1,21 @@
-#ifndef CHIP_CONTROLLER_HPP_
-#define CHIP_CONTROLLER_HPP_
+#ifndef ORDER_CONTROLLER_HPP_
+#define ORDER_CONTROLLER_HPP_
 
-#include "AGW_Persistence.hpp"
+#include "AgriBiz_Persistence.hpp"
 #include "Controller_Impl.hpp"
 #include "JsonConversion.hpp"
+#include "Order.hpp"
 
 using namespace demystify;
 
-using ChipController = demystify::subsystem::AntiGhostWorker::Controller<ChipCRUD>;
+using OrderController = demystify::AgriBiz::controller::Controller<OrderCRUD>;
 
 namespace demystify::JsonConversion
 {
-    using namespace subsystem::AntiGhostWorker;
-    web::json::value ChipAsJSON(const Chip& chip);
-    Chip ChipFromJSON(const web::json::value& ChipJson);
+    using namespace AgriBiz;
+    web::json::value OrderAsJSON(const Order& order);
+    Order OrderFromJSON(const web::json::value& orderJson);
 } // namespace JsonConversion
 
 
-#endif //CHIP_CONTROLLER_HPP_
+#endif //ORDER_CONTROLLER_HPP_

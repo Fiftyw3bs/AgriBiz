@@ -1,21 +1,21 @@
-#ifndef STAMP_CONTROLLER_HPP_
-#define STAMP_CONTROLLER_HPP_
+#ifndef FARMLAND_CONTROLLER_HPP_
+#define FARMLAND_CONTROLLER_HPP_
 
-#include "AGW_Persistence.hpp"
+#include "AgriBiz_Persistence.hpp"
 #include "Controller_Impl.hpp"
-#include "ChipController.hpp"
+#include "FarmLand.hpp"
 #include "JsonConversion.hpp"
 
 using namespace demystify;
 
-using StampController = demystify::subsystem::AntiGhostWorker::Controller<StampCRUD>;
+using FarmLandController = demystify::AgriBiz::controller::Controller<FarmLandCRUD>;
 
 namespace demystify::JsonConversion
 {
     using namespace subsystem::AntiGhostWorker;
-    web::json::value StampAsJSON(const Stamp& stamp);
-    Stamp StampFromJSON(const web::json::value& stampJson);
+    web::json::value FarmLandAsJSON(const FarmLand& FarmLand);
+    FarmLand FarmLandFromJSON(const web::json::value& FarmLandJson);
 } // namespace JsonConversion
 
 
-#endif //STAMP_CONTROLLER_HPP_
+#endif //FARMLAND_CONTROLLER_HPP_

@@ -1,8 +1,8 @@
 #include "Controller_Impl.hpp"
 
 using namespace demystify;
-using namespace persistence;
-using namespace ::subsystem::AntiGhostWorker;
+using namespace AgriBiz;
+using namespace controller;
 
 template <class CRUDType>
 Controller<CRUDType>::Controller(PGPoolPtr& pgPool) : dbo(pgPool)
@@ -32,7 +32,7 @@ web::json::value Controller<CRUDType>::add(const pplx::task<web::json::value>& c
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::update(const pplx::task<web::json::value>& contentAsJson, const UserID& entityId, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::update(const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
 {
     bool success = false;
 
@@ -81,7 +81,7 @@ web::json::value Controller<CRUDType>::update(const pplx::task<web::json::value>
 
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>& contentAsJson, const UserID& entityId, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
 {
     bool success = false;
 
@@ -114,7 +114,7 @@ web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::fetchOne(const UserID& entityId, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::fetchOne((const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
 {
     auto contentAsJson = web::json::value::object();
     auto entity = this->dbo.fetchOne(entityId);
@@ -132,7 +132,7 @@ web::json::value Controller<CRUDType>::fetchOne(const UserID& entityId, FUNC jso
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::fetchAll(const FetchLimit& limit, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::fetchAll((const pplx::task<web::json::value>& Json, const Offset& offset, const Limit& limit, FUNC jsonConverter)
 {
     auto contentAsJson = web::json::value::object();
     bool success = false;
