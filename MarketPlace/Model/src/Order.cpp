@@ -106,3 +106,69 @@ const User& Order::orderer()
 {
     return this->_orderer;
 }
+std::string Order::status(StringOutput) const
+{
+    switch (this->_status)
+    {
+    case OrderStatus::PENDING:
+        return "PENDING";
+        break;
+    case OrderStatus::ACCEPTED:
+        return "ACCEPTED";
+        break;
+    case OrderStatus::COMPLETED:
+        return "COMPLETED";
+        break;
+    case OrderStatus::SUSPENDED:
+        return "SUSPENDED";
+        break;
+    default:
+        return "UNKNOWN";
+    }
+}
+std::string Order::type(StringOutput) const
+{
+    switch (this->_orderType)
+    {
+    case OrderType::BUY:
+        return "BUY";
+        break;
+    case OrderType::SELL:
+        return "SELL";
+        break;
+    }
+}
+void Order::type(const std::string& type)
+{
+    if (type == "BUY")
+    {
+        this->_orderType = OrderType::BUY;
+    } 
+    else if (type == "SELL")
+    {
+        this->_orderType = OrderType::SELL;
+    }
+}
+void Order::status(const std::string& status)
+{
+    if (status == "ACCEPTED")
+    {
+        this->_status = OrderStatus::ACCEPTED;
+    } 
+    else if (status == "COMPLETED")
+    {
+        this->_status = OrderStatus::COMPLETED;
+    }
+    else if (status == "PENDING")
+    {
+        this->_status = OrderStatus::PENDING;
+    }
+    else if (status == "SUSPENDED")
+    {
+        this->_status = OrderStatus::SUSPENDED;
+    }
+    else
+    {
+        this->_status = OrderStatus::UNKNOWN;
+    }
+}

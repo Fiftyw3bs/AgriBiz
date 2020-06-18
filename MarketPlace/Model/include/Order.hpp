@@ -57,6 +57,7 @@ public:
     Order(OrderType orderType, const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location);
 
     void status(const OrderStatus& status);
+    void status(const std::string& status);
     void costPerKg(const float& cost);
     void harvestDate(const Datable& harvestDate);
     void location(const Location& location);
@@ -66,8 +67,10 @@ public:
     void farmProduce(const FarmProduce& farmProduce);
     void quantity(const float& quantity);
     void type(const OrderType& type);
+    void type(const std::string& type);
 
     OrderStatus status() const;
+    std::string status(StringOutput) const;
     const float costPerKg() const;
     const Datable harvestDate() const;
     const std::string description() const;
@@ -78,6 +81,7 @@ public:
     const FarmProduce& farmProduce() const;
     const float quantity() const;
     OrderType type() const;
+    std::string type(StringOutput) const;
 };
 
 } // namespace AgriBiz

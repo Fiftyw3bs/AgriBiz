@@ -35,7 +35,10 @@ TEST(AgriBiz_Persistence, TestAddBid)
 TEST(AgriBiz_Persistence, TestFetchBid)
 {
     auto bid = tBidCRUD.fetch(tBid);
-    ASSERT_TRUE(bid.status() == BidStatus::PENDING);
+    ASSERT_TRUE(bid.status() == tBid.status());
+    ASSERT_TRUE(bid.quantity() == tBid.quantity());
+    ASSERT_TRUE(bid.bidder() == tBid.bidder());
+    ASSERT_TRUE(bid.biddingPrice() == tBid.biddingPrice());
 }
 
 TEST(AgriBiz_Persistence, TestUpdateBid)
@@ -43,7 +46,7 @@ TEST(AgriBiz_Persistence, TestUpdateBid)
     tBid.status(BidStatus::DECLINED);
     ASSERT_TRUE(tBidCRUD.update(tBid));
     auto bid = tBidCRUD.fetch(tBid);
-    ASSERT_TRUE(bid.status() == BidStatus::DECLINED);
+    ASSERT_TRUE(bid.status() == tBid.status());
 }
 
 TEST(AgriBiz_Persistence, TestRemoveBid)

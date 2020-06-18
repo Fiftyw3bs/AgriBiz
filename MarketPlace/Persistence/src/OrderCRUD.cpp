@@ -22,9 +22,9 @@ OrderID OrderCRUD::add(const Order& order)
         order.harvestDate().getTimeString(),
         order.getTimeString(), // Date of order
         order.description(),
-        order.completionDate(),
-        order.type(),
-        order.status()
+        order.completionDate().getTimeString(),
+        order.type(StringOutput()),
+        order.status(StringOutput())
     );
     
     if (!mm[0]["order_id"].is_null())
@@ -51,24 +51,29 @@ bool OrderCRUD::update(const Order& order)
         order.quantity(),
         order.location().getId(),
         order.harvestDate().getTimeString(),
-        order.getTimeString(), // Date of order
         order.description(),
-        order.completionDate(),
-        order.type(),
-        order.status(),
+        order.completionDate().getTimeString(),
+        order.type(StringOutput()),
+        order.status(StringOutput()),
+        order.getTimeString(), // Date of order
         order.getId()
     ).empty();    
 }
 VectorOf<Order> OrderCRUD::fetch(const Datable& startDate, const Datable& endDate, const Offset& offset, const Limit& limit)
 {
-    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_CONSTRAINT", "date_posted BETWEEN $1 " + startDate.getTimeString() + " AND " + endDate.getTimeString(), offset, limit);
+    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_DATE", startDate.getTimeString(), endDate.getTimeString(), offset, limit);
 
     return this->processFetched(retVal);
 
 }
 VectorOf<Order> OrderCRUD::fetch(const User& orderer, const Offset& offset, const Limit& limit)
 {
-    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_CONSTRAINT", "orderer_id = " + std::to_string(orderer.getId()), offset, limit);
+    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_ORDERER", orderer.getId(), offset, limit);
+    return this->processFetched(retVal);
+}
+VectorOf<Order> OrderCRUD::fetch(const std::string& status, const Offset& offset, const Limit& limit)
+{
+    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_STATUS", status, offset, limit);
     return this->processFetched(retVal);
 }
 VectorOf<Order> OrderCRUD::processFetched(const result& res)
@@ -108,8 +113,8 @@ VectorOf<Order> OrderCRUD::processFetched(const result& res)
             cDate.setDate(row["date_complete"].as<std::string>());
             tmpOrder.harvestDate(cDate);
 
-            tmpOrder.type(row["order_type"].as<OrderType>());
-            tmpOrder.status(row["order_status"].as<OrderStatus>());
+            tmpOrder.type(row["order_type"].as<std::string>());
+            tmpOrder.status(row["order_status"].as<std::string>());
 
             tmpOrders.push_back(tmpOrder);
         }
@@ -132,8 +137,14 @@ bool OrderCRUD::assignBid(const Bid& bid, const Order& order)
     ).empty();
 }
 
+Order OrderCRUD::fetch(const Order& order)
+{
+    auto retVal = this->performDBOperation("ORDER_FETCH_ALL_BY_ORDER_ID", order.getId(), 0, 1);
+    return this->processFetched(retVal)[0];
+}
+
 DBStatements OrderCRUD::crudStatements{
-    {"ORDER_FETCH_ALL_BY_CONSTRAINT", 
+    {"ORDER_FETCH_ALL_BY_ORDERER", 
         "SELECT \
             order_id, \
             orderer_id, \
@@ -144,16 +155,73 @@ DBStatements OrderCRUD::crudStatements{
             date_posted, \
             description, \
             date_complete, \
-            order_type, \
-            order_status \
-         FROM Order \
-         WHERE $1\
+            order_type::text, \
+            order_status::text \
+         FROM Orders \
+         WHERE orderer_id=$1\
          ORDER BY date_posted DESC \
          OFFSET $2 ROWS \
          FETCH NEXT $3 ROWS ONLY"
     },
-    {"Order_CREATE", "INSERT INTO Order (order_id, orderer_id, cost_per_kg, quantity, location_id, harvest_date, date_posted, description, date_complete, order_type, order_status) VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING order_id"},
-    {"Order_REMOVE_ONE_BY_ID", "DELETE FROM Order WHERE order_id = $1"},
+    {"ORDER_FETCH_ALL_BY_DATE", 
+        "SELECT \
+            order_id, \
+            orderer_id, \
+            cost_per_kg, \
+            quantity, \
+            location_id, \
+            harvest_date, \
+            date_posted, \
+            description, \
+            date_complete, \
+            order_type::text, \
+            order_status::text \
+         FROM Orders \
+         WHERE date_posted BETWEEN $1 AND $2 \
+         ORDER BY date_posted DESC \
+         OFFSET $3 ROWS \
+         FETCH NEXT $4 ROWS ONLY"
+    },
+    {"ORDER_FETCH_ALL_BY_STATUS", 
+        "SELECT \
+            order_id, \
+            orderer_id, \
+            cost_per_kg, \
+            quantity, \
+            location_id, \
+            harvest_date, \
+            date_posted, \
+            description, \
+            date_complete, \
+            order_type::text, \
+            order_status::text \
+         FROM Orders \
+         WHERE order_status=$1\
+         ORDER BY date_posted DESC \
+         OFFSET $2 ROWS \
+         FETCH NEXT $3 ROWS ONLY"
+    },
+    {"ORDER_FETCH_ALL_BY_ORDER_ID", 
+        "SELECT \
+            order_id, \
+            orderer_id, \
+            cost_per_kg, \
+            quantity, \
+            location_id, \
+            harvest_date, \
+            date_posted, \
+            description, \
+            date_complete, \
+            order_type::text, \
+            order_status::text \
+         FROM Orders \
+         WHERE order_id=$1\
+         ORDER BY date_posted DESC \
+         OFFSET $2 ROWS \
+         FETCH NEXT $3 ROWS ONLY"
+    },
+    {"Order_CREATE", "INSERT INTO Orders (order_id, orderer_id, cost_per_kg, quantity, location_id, harvest_date, date_posted, description, date_complete, order_type, order_status) VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING order_id"},
+    {"Order_REMOVE_ONE_BY_ID", "DELETE FROM Orders WHERE order_id = $1"},
     {"Order_ASSIGN_BID", "INSERT INTO Bid_Order (bid_id, order_id) VALUES ($1, $2)"},
-    {"Order_MODIFY", "UPDATE Order SET cost_per_kg=$1, quantity=$2, location_id=$3, harvest_date=$4, description=$5, date_complete=$6, order_type=$7, order_status=$8 WHERE order_id=$9"}
+    {"Order_MODIFY", "UPDATE Orders SET cost_per_kg=$1, quantity=$2, location_id=$3, harvest_date=$4, description=$5, date_complete=$6, order_type=$7, order_status=$8, date_posted=$9 WHERE order_id=$10"}
 };

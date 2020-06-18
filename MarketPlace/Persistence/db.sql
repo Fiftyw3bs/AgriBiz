@@ -139,11 +139,11 @@ INSERT INTO Streets (city_id, street_name) VALUES
 -- In the OOP declarations and definitions of classes that use Location, Location shall
 -- be implemented as an inner class.
 CREATE TABLE IF NOT EXISTS Locations (
-    location_id SERIAL NOT NULL,
-    country_id INT NOT NULL REFERENCES Countries(country_id),
-    state_id INT NOT NULL REFERENCES States(state_id),
-    city_id INT NOT NULL REFERENCES Cities(city_id),
-    street_id INT NOT NULL REFERENCES Streets(street_id),
+    location_id SERIAL UNIQUE NOT NULL,
+    country_id INT NOT NULL,
+    state_id INT NOT NULL,
+    city_id INT NOT NULL,
+    street_id INT NOT NULL,
     cordinates varchar(30),
     PRIMARY KEY (location_id, country_id, state_id, city_id, street_id)
 );
@@ -269,23 +269,23 @@ CREATE TYPE OrderStatus AS ENUM (
     'UNKNOWN'
 );
 
-CREATE TABLE IF NOT EXISTS Order (
+CREATE TABLE IF NOT EXISTS Orders (
     order_id SERIAL NOT NULL,
     orderer_id INT NOT NULL REFERENCES Users(user_id) ON DELETE CASCADE,
     cost_per_kg FLOAT NOT NULL DEFAULT 0,
     quantity FLOAT NOT NULL DEFAULT 0,
-    location_id INT NOT NULL REFERENCES Location(location_id) ON DELETE RESTRICT,
+    location_id INT NOT NULL,
     harvest_date TIMESTAMP NOT NULL,
     date_posted TIMESTAMP NOT NULL DEFAULT NOW(),
     description TEXT NOT NULL,
     date_complete TIMESTAMP,
     order_type OrderType NOT NULL,
-    order_status OrderStatus NOT NULL DEFAULT 'PENDING'
+    order_status OrderStatus NOT NULL DEFAULT 'PENDING',
     PRIMARY KEY (order_id)
 );
 
 CREATE TABLE IF NOT EXISTS Bid_Order (
     bid_id INT NOT NULL REFERENCES Bid(bid_id) ON DELETE CASCADE,
-    order_id INT NOT NULL REFERENCES Order(order_id) ON DELETE CASCADE,
+    order_id INT NOT NULL REFERENCES Orders(order_id) ON DELETE CASCADE,
     PRIMARY KEY(bid_id, order_id)
 );

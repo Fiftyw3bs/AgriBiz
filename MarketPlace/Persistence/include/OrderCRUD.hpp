@@ -46,7 +46,7 @@ public:
     bool update(const Order& Order);
     bool assignBid(const Bid& bid, const Order& Order);
     Order fetch(const Order& Order);
-    // VectorOf<Order> fetch(const OrderStatus& status, const Offset& offset, const Limit& limit);
+    VectorOf<Order> fetch(const std::string& orderStatus, const Offset& offset, const Limit& limit);
     // VectorOf<Order> fetch(const Order& order, const Offset& offset, const Limit& limit);
     // Order fetch(const Order& order);
     // VectorOf<Order> fetch(const OrderType& orderType, const Offset& offset, const Limit& limit);
