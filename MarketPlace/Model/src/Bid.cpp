@@ -45,3 +45,44 @@ void Bid::status(const BidStatus& status)
 {
     this->_status = status;
 }
+const std::string Bid::status(StringOutput) const
+{
+    std::string status;
+
+    switch (this->_status)
+    {
+    case BidStatus::PENDING:
+        status = "PENDING";
+        break;
+    case BidStatus::ACCEPTED:
+        status = "ACCEPTED";
+        break;
+    case BidStatus::DECLINED:
+        status = "DECLINED";
+        break;
+    case BidStatus::SUSPENDED:
+        status = "SUSPENDED";
+        break;
+    }
+
+    return status;
+}
+void Bid::status(const std::string& status)
+{
+    if (status == "PENDING")
+    {
+        this->_status = BidStatus::PENDING;
+    } 
+    else if (status == "COMPLETED")
+    {
+        this->_status = BidStatus::ACCEPTED;
+    }
+    else if (status == "DECLINED")
+    {
+        this->_status = BidStatus::DECLINED;
+    }
+    else if (status == "SUSPENDED")
+    {
+        this->_status = BidStatus::SUSPENDED;
+    }
+}

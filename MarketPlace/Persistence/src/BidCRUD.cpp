@@ -16,8 +16,7 @@ BidID BidCRUD::add(const Bid& bid)
         "BID_CREATE",
         bid.biddingPrice(),
         bid.quantity(),
-        bid.quantity(),
-        // bid.status(),
+        bid.status(StringOutput()),
         bid.getTimeString(),
         bid.bidder().getId()
     );
@@ -44,8 +43,7 @@ bool BidCRUD::update(const Bid& bid)
         "BID_MODIFY",
         bid.biddingPrice(),
         bid.quantity(),
-        bid.quantity(),
-        // bid.status(),
+        bid.status(StringOutput()),
         bid.getId()
     ).empty();
 }
@@ -76,8 +74,7 @@ VectorOf<Bid> BidCRUD::processFetched(const result res)
             User tUser;
             tUser.setId(row["bidder_id"].as<UserID>());
             tmpBid.bidder(tUser);
-            // cout << "Bid Status: " << row["bid_status"].as<uint32_t>() << endl;
-            tmpBid.status();
+            tmpBid.status(row["bid_status"].as<std::string>());
             tmpBids.push_back(tmpBid);
         }
     }
@@ -93,15 +90,16 @@ VectorOf<Bid> BidCRUD::processFetched(const result res)
 DBStatements BidCRUD::crudStatements{
     {"BID_FETCH_ONE_BY_BID_ID", 
         "SELECT \
-            t1.bid_id, \
-            t1.bidding_price, \
-            t1.quantity, \
-            t1.bid_status, \
-            t1.bid_date, \
+            bid_id, \
+            bidding_price, \
+            bidder_id, \
+            quantity, \
+            bid_status, \
+            bid_date \
          FROM Bid \
          WHERE bid_id = $1"
     },
     {"BID_CREATE", "INSERT INTO Bid (bid_id, bidding_price, quantity, bid_status, bid_date, bidder_id) VALUES (DEFAULT, $1, $2, $3, $4, $5) RETURNING bid_id"},
     {"BID_REMOVE_ONE_BY_ID", "DELETE FROM Bid WHERE bid_id = $1"},
-    {"BID_MODIFY", "UPDATE Bid SET bidding_price=$1, quantity=$2, bid_status=$3 WHERE bid_id=$4 AND bidder_id"}
+    {"BID_MODIFY", "UPDATE Bid SET bidding_price=$1, quantity=$2, bid_status=$3 WHERE bid_id=$4"}
 };

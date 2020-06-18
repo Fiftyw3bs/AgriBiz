@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Auth (
 );
 
 CREATE TABLE IF NOT EXISTS Users (
-    user_id INT NOT NULL,
+    user_id SERIAL NOT NULL,
     username VARCHAR(255) NOT NULL,
     email VARCHAR(255),
     enabled BOOLEAN DEFAULT FALSE,

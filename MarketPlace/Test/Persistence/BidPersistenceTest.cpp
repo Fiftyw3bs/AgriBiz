@@ -18,16 +18,11 @@ BidCRUD tBidCRUD(myPool);
 UserCRUD tUserCRUD(myPool);
 VectorOf<Bid> dbBids;
 
-// TEST(AgriBiz_Persistence, TestFetch)
-// {
-//     dbBids = tBidCRUD.fetch(5);
-//     tBid.setId(dbBids.front().getId());
-//     ASSERT_TRUE(dbBids.size() == 5);
-// }
-
 TEST(AgriBiz_Persistence, TestAddBid)
 {
-    User tUser = tUserCRUD.fetchOne(1);
+    // User tUser = tUserCRUD.fetchOne(1);
+    User tUser;
+    tUser.setId(1);
     tBid.status(BidStatus::PENDING);
     tBid.quantity(123.4);
     tBid.bidder(tUser);
@@ -37,10 +32,27 @@ TEST(AgriBiz_Persistence, TestAddBid)
     ASSERT_TRUE(bidId != 0);
 }
 
-// TEST(AgriBiz_Persistence, TestRemoveBid)
-// {
-//     ASSERT_TRUE(tBidCRUD.remove(tBid));
-// }
+TEST(AgriBiz_Persistence, TestFetchBid)
+{
+    auto bid = tBidCRUD.fetch(tBid);
+    ASSERT_TRUE(bid.status() == BidStatus::PENDING);
+}
+
+TEST(AgriBiz_Persistence, TestUpdateBid)
+{
+    tBid.status(BidStatus::DECLINED);
+    ASSERT_TRUE(tBidCRUD.update(tBid));
+    auto bid = tBidCRUD.fetch(tBid);
+    ASSERT_TRUE(bid.status() == BidStatus::DECLINED);
+}
+
+TEST(AgriBiz_Persistence, TestRemoveBid)
+{
+    tBid.status(BidStatus::DECLINED);
+    ASSERT_TRUE(tBidCRUD.remove(tBid));
+    auto bid = tBidCRUD.fetch(tBid);
+    ASSERT_TRUE(bid.getId() == 0);
+}
 
 } // namespace unittest
 } // namespace demystify

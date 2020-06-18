@@ -23,6 +23,9 @@ class Order;
 
 using namespace personal;
 
+struct StringOutput
+{};
+
 enum class BidStatus
 {
     PENDING,
@@ -49,11 +52,13 @@ public:
     const float quantity() const;
     const User& bidder() const;
     const BidStatus status() const;
+    const std::string status(StringOutput) const;
 
     void status(const BidStatus& status);
     void biddingPrice(const float& biddingPrice);
     void quantity(const float& quantity);
     void bidder(const User& bidder);
+    void status(const std::string& status);
     
     // ~Bid();
 };
