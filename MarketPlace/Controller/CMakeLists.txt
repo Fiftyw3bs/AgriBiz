@@ -5,9 +5,9 @@ add_definitions(-lpthread)
 FIND_PACKAGE(Threads)
 
 # Optionally glob, but only for CMake 3.12 or later:
-file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Controller/include")
-file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Controller/src/*.cpp")
-set(CONTROLLER_PATH "${PROJECT_SOURCE_DIR}/Controller")
+set(CONTROLLER_PATH "${PROJECT_SOURCE_DIR}/MarketPlace/Controller")
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${CONTROLLER_PATH}/include")
+file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${CONTROLLER_PATH}/src/*.cpp")
 # set(HEADER_LIST "${ModernCMakeExample_SOURCE_DIR}/include/modern/lib.hpp")
 
 # Make an automatic library - will be static or dynamic based on user setting
@@ -17,7 +17,7 @@ add_library(AgriBiz_Controller_Lib main.cpp ${SOURCE_LIST})
 target_include_directories(AgriBiz_Controller_Lib PUBLIC ${HEADER_LIST} ${CONTROLLER_PATH})
 
 # This depends on (header only) boost
-target_link_libraries(AgriBiz_Controller_Lib PUBLIC AgriBiz_Model_Lib AgriBiz_Persistence_Lib)
+target_link_libraries(AgriBiz_Controller_Lib PUBLIC AgriBiz_Model_Lib AgriBiz_Persistence_Lib cpprest)
 # target_link_libraries(AgriBiz_Controller_Lib PUBLIC Model_Lib)
 
 # IDEs should put the headers in a nice place

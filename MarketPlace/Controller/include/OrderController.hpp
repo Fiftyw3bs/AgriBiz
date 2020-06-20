@@ -7,6 +7,7 @@
 #include "Order.hpp"
 
 using namespace demystify;
+using namespace AgriBiz::persistence;
 
 using OrderController = demystify::AgriBiz::controller::Controller<OrderCRUD>;
 

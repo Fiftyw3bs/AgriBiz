@@ -7,6 +7,7 @@
 
 
 using namespace demystify;
+using namespace AgriBiz::persistence;
 
 using FarmProduceController = demystify::AgriBiz::controller::Controller<FarmProduceCRUD>;
 

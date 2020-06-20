@@ -2,7 +2,7 @@
 
 using namespace demystify;
 using namespace AgriBiz;
-using namespace controller;
+using namespace AgriBiz::controller;
 
 template <class CRUDType>
 Controller<CRUDType>::Controller(PGPoolPtr& pgPool) : dbo(pgPool)
@@ -32,81 +32,29 @@ web::json::value Controller<CRUDType>::add(const pplx::task<web::json::value>& c
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::update(const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::update(const pplx::task<web::json::value>& contentAsJson, const EntityID& entityId, FUNC jsonConverter)
 {
     bool success = false;
 
-    if constexpr(std::is_same_v<CRUDType, ChipCRUD>)
-    {
-        contentAsJson.then([&](const web::json::value& chipJson){
-            if (chipJson.has_field("update_type"))
-            {
-                auto userId = chipJson.at("userId").as_integer();
-                auto chipId = chipJson.at("chipId").as_integer();
-                auto action = chipJson.at("update_type").as_string();
-
-                if (action == "revoke")
-                {
-                    if (auto retVal = this->dbo.fetchOne(userId); retVal.isAssigned())
-                    {
-                        success = this->dbo.revoke(userId, chipId);
-                    }
-                }
-                else if (action == "assign")
-                {
-                    if (auto retVal = this->dbo.fetchOne(userId); !retVal.isAssigned())
-                    {
-                        success = this->dbo.assign(userId, chipId);
-                    }
-                }
-                else
-                {
-                    
-                }                
-            }
-        }).get();
-    }
-    else
-    {
-        contentAsJson.then([&](const web::json::value& entityJson){
-            auto entity = jsonConverter(entityJson);
-            entity.setId(entityId);
-            success = this->dbo.update(entity);
-        }).get();
-    }
-
+    contentAsJson.then([&](const web::json::value& entityJson){
+        auto entity = jsonConverter(entityJson);
+        entity.setId(entityId);
+        success = this->dbo.update(entity);
+    }).get();
 
     return JsonConversion::message(success);
 }
 
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>& contentAsJson, const EntityID& entityId, FUNC jsonConverter)
 {
     bool success = false;
 
     contentAsJson.then([&](const web::json::value& entityJson){
-        if constexpr(std::is_same_v<CRUDType, StampCRUD>)
-        {
-            if (entityId == 0)
-            {
-                if (!entityJson.at("chip").is_null())
-                {
-                    auto chip = jsonConverter(entityJson.at("chip"));
-                    success = this->dbo.removeAllByChip(chip);
-                }
-            }
-            else
-            {
-                success = this->dbo.remove(entityId);
-            }
-        }
-        else
-        {
-            auto entity = jsonConverter(entityJson);
-            entity.setId(entityId);
-            success = this->dbo.remove(entity);
-        }
+        auto entity = jsonConverter(entityJson);
+        entity.setId(entityId);
+        success = this->dbo.remove(entity);
     }).get();
 
     return JsonConversion::message(success);
@@ -114,7 +62,7 @@ web::json::value Controller<CRUDType>::remove(const pplx::task<web::json::value>
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::fetchOne((const pplx::task<web::json::value>& Json, const EntityID& Id, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::fetchOne(const pplx::task<web::json::value>& json, const EntityID& entityId, FUNC jsonConverter)
 {
     auto contentAsJson = web::json::value::object();
     auto entity = this->dbo.fetchOne(entityId);
@@ -132,7 +80,7 @@ web::json::value Controller<CRUDType>::fetchOne((const pplx::task<web::json::val
 }
 template <class CRUDType>
 template <class FUNC>
-web::json::value Controller<CRUDType>::fetchAll((const pplx::task<web::json::value>& Json, const Offset& offset, const Limit& limit, FUNC jsonConverter)
+web::json::value Controller<CRUDType>::fetchAll(const pplx::task<web::json::value>& json, const Offset& offset, const Limit& limit, FUNC jsonConverter)
 {
     auto contentAsJson = web::json::value::object();
     bool success = false;
@@ -155,52 +103,6 @@ web::json::value Controller<CRUDType>::fetchAll((const pplx::task<web::json::val
     {
         contentAsJson = JsonConversion::message(success);
     }
-    
-    return contentAsJson;
-}
-
-template <class CRUDType>
-template <class FUNC>
-web::json::value Controller<CRUDType>::fetchAll(const FetchLimit& limit, const pplx::task<web::json::value>& Json, FUNC jsonConverter)
-{
-    auto contentAsJson = web::json::value::object();
-    VectorOf<Stamp> stamps;
-    uint32_t count = 0;
-
-    Json.then([&](const web::json::value& entityJson){
-        if constexpr(std::is_same_v<CRUDType, StampCRUD>)
-        {
-            if (auto chipJson = entityJson.at("chip"); !chipJson.is_null())
-            {
-                if (entityJson.at("startDate").is_null())
-                {
-                    auto chip = jsonConverter.second(chipJson);
-                    stamps = this->dbo.fetchByChip(chip);
-                }
-                else
-                {
-                    auto chip = jsonConverter.second(chipJson);
-                    auto startDate = JsonConversion::DatableFromJSON(entityJson.at("startDate"));
-                    auto endDate = JsonConversion::DatableFromJSON(entityJson.at("endDate"));
-                    stamps = this->dbo.fetchByStampTime(chip, startDate, endDate);
-                }
-            }
-            else
-            {
-                auto chip = jsonConverter.second(chipJson);
-                auto startDate = JsonConversion::DatableFromJSON(entityJson.at("startDate"));
-                auto endDate = JsonConversion::DatableFromJSON(entityJson.at("endDate"));
-                stamps = this->dbo.fetchAllByStampTime(startDate, endDate);
-            }
-        }
-
-        for (auto &stamp : stamps)
-        {
-            contentAsJson[U(std::to_string(count))] = jsonConverter.first(stamp);
-            ++count;
-        }
-        
-    }).get();
     
     return contentAsJson;
 }

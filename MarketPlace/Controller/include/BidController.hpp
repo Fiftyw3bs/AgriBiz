@@ -7,6 +7,7 @@
 #include "Bid.hpp"
 
 using namespace demystify;
+using namespace AgriBiz::persistence;
 
 using BidController = demystify::AgriBiz::controller::Controller<BidCRUD>;
 
