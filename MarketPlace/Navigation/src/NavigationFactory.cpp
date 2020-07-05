@@ -1,26 +1,26 @@
 #include "NavigationFactory.hpp"
 
 using namespace demystify;
-using namespace subsystem::AntiGhostWorker;
+using namespace AgriBiz;
 
 PointerOf<Navigator> NavigationFactory::operator()(const http_request& message, PGPoolPtr& pgPool)
 {
     auto [controller, args] = Navigator::parseRequest(message);
 
-    if (controller == "employees")
+    if (controller == "bids")
     {
-        EmployeeNavigator navigator(message, pgPool);
-        return MakePointerOf<EmployeeNavigator>(navigator);
+        BidNavigator navigator(message, pgPool);
+        return MakePointerOf<BidNavigator>(navigator);
     }
-    else if (controller == "chips")
+    else if (controller == "orders")
     {
-        ChipNavigator navigator(message, pgPool);
-        return MakePointerOf<ChipNavigator>(navigator);
+        OrderNavigator navigator(message, pgPool);
+        return MakePointerOf<OrderNavigator>(navigator);
     }
-    else if (controller == "stamps")
+    else if (controller == "farmProducts")
     {
-        StampNavigator navigator(message, pgPool);
-        return MakePointerOf<StampNavigator>(navigator);
+        FarmProduceNavigator navigator(message, pgPool);
+        return MakePointerOf<FarmProduceNavigator>(navigator);
     }
     
     

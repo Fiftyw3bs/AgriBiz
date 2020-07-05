@@ -6,9 +6,9 @@ FIND_PACKAGE(Threads)
 
 # Optionally glob, but only for CMake 3.12 or later:
 file(GLOB M_HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Model/include")
-file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Navigation/include")
-file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Navigation/src/*.cpp")
 set(NAVIGATION_PATH "${PROJECT_SOURCE_DIR}/Navigation/")
+file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${NAVIGATION_PATH}/include")
+file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${NAVIGATION_PATH}/src/*.cpp")
 # set(HEADER_LIST "${ModernCMakeExample_SOURCE_DIR}/include/modern/lib.hpp")
 
 # Make an automatic library - will be static or dynamic based on user setting

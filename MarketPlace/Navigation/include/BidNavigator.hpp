@@ -1,33 +1,30 @@
-#ifndef CHIP_NAVIGATOR_HPP_
-#define CHIP_NAVIGATOR_HPP_
+#ifndef BID_NAVIGATOR_HPP_
+#define BID_NAVIGATOR_HPP_
 
 #include "Server.hpp"
-#include "PGPool.hpp"
+#include "MongoPark.hpp"
 #include "Models.hpp"
 #include "Navigator.hpp"
-#include "ChipController.hpp"
+#include "BidController.hpp"
 
 #include <string>
 
-namespace demystify 
+namespace demystify
 {
-namespace subsystem
-{
-namespace AntiGhostWorker
+namespace AgriBiz
 {
 
 using namespace navigation;
 using namespace persistence;
-    
+
 using ControllerType = std::string;
 using Action = std::string;
 
-class ChipNavigator : public Navigator
+class BidNavigator : public Navigator
 {
 public:
-    ChipNavigator(
-        const http_request& message,
-        PGPoolPtr& pgPool
+    BidNavigator(
+        const http_request& message
     );
     virtual web::json::value process(pplx::task<web::json::value> content);
 
@@ -35,9 +32,7 @@ public:
 
 } // namespace AntiGhostWorker
 
-} // namespace subsystem
-    
 } // demystify
 
 
-#endif //CHIP_NAVIGATOR_HPP_
+#endif //BID_NAVIGATOR_HPP_
