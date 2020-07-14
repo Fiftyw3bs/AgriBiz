@@ -34,7 +34,7 @@ enum class OrderType
 
 using namespace personal;
 
-class Order : public Identifiable, public Datable, private Subscribable<Bid>
+class Order : public Identifiable, public Datable, public Subscribable<Bid>
 {
 private:
     FarmProduce _farmProduce;
@@ -49,8 +49,7 @@ private:
     OrderStatus _status;
 
     const float totalCost(const float& quantity, const float& costPerKg) const;
- 
-    friend class OrderCRUD; // Needed to use addSubscriber()
+
 
 public:
     Order();

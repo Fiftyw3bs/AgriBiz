@@ -128,15 +128,19 @@ std::string Order::status(StringOutput) const
 }
 std::string Order::type(StringOutput) const
 {
+    std::string order_type;
+
     switch (this->_orderType)
     {
     case OrderType::BUY:
-        return "BUY";
+        order_type = "BUY";
         break;
     case OrderType::SELL:
-        return "SELL";
+        order_type = "SELL";
         break;
     }
+
+    return order_type;
 }
 void Order::type(const std::string& type)
 {
