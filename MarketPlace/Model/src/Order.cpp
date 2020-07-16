@@ -7,11 +7,11 @@ using namespace AgriBiz;
 using namespace demystify::personal;
 
 
-Order::Order() 
+Order::Order()
     : _farmProduce{FarmProduce("Null")}, _costPerKg{0}, _orderer{User()}, _location{Location(0, 0)}
 {
 }
-Order::Order(OrderType orderType, const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location) 
+Order::Order(OrderType orderType, const FarmProduce& farmProduce, const float& costPerKg, const User& orderer, const Location& location)
     : _farmProduce{farmProduce}, _costPerKg{costPerKg}, _orderer{orderer}, _location{location}
 {
 }
@@ -147,7 +147,7 @@ void Order::type(const std::string& type)
     if (type == "BUY")
     {
         this->_orderType = OrderType::BUY;
-    } 
+    }
     else if (type == "SELL")
     {
         this->_orderType = OrderType::SELL;
@@ -158,7 +158,7 @@ void Order::status(const std::string& status)
     if (status == "ACCEPTED")
     {
         this->_status = OrderStatus::ACCEPTED;
-    } 
+    }
     else if (status == "COMPLETED")
     {
         this->_status = OrderStatus::COMPLETED;
@@ -176,3 +176,15 @@ void Order::status(const std::string& status)
         this->_status = OrderStatus::UNKNOWN;
     }
 }
+
+bool Order::assignBid(const Bid& bid)
+{
+    auto old_size = this->_subscribers.size();
+    this->_subscribers.push_back(MakePointerOf<Bid>(bid));
+    return old_size != this->_subscribers.size();
+}
+
+// VectorOf<PointerOf<Bid>(Bid)> Order::bids() const
+// {
+//     return this->getSubscribers();
+// }

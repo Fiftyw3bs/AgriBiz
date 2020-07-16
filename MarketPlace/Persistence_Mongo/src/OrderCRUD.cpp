@@ -20,10 +20,3 @@ OrderCRUD::OrderCRUD(mongocxx::client& client_, const MongoDBInfo dbInfo) : Gene
 // {
     
 // }
-
-bool OrderCRUD::assignBid(const Bid& bid, const Order& order)
-{
-    auto bidJson = JsonConversion::BidAsJSON(bid);
-    auto val = document{} << "$addToSet" << open_document << "bids" << bidJson << close_document << finalize;
-    return this->update_single(this->dbInfo, order.getId(), bsoncxx::to_json(val));
-}

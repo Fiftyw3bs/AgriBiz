@@ -81,6 +81,9 @@ public:
     const float quantity() const;
     OrderType type() const;
     std::string type(StringOutput) const;
+
+    bool assignBid(const Bid& bid);
+    // VectorOf<PointerOf<Bid>(Bid)> bids() const;
 };
 
 } // namespace AgriBiz

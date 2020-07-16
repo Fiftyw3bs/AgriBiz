@@ -71,11 +71,9 @@ TEST(OrderCRUD_Test, TestFetchOne)
 
     Db = MDBInstance::get_instance();
     Db->create_pool("mongodb://localhost:27017");
-    MongoDBInfo dbInfo("test_farmer");
     auto db_client = Db->get_client();
     OrderCRUD orderDbo(*db_client, dbInfo);
 
-    std::cout << tOrder.getId() << std::endl;
     auto order = orderDbo.fetch(tOrder);
 
     ASSERT_EQ(order.costPerKg(), tOrder.costPerKg());
@@ -95,10 +93,29 @@ TEST(OrderCRUD_Test, TestModify)
 
     auto old_costPerKg = tOrder.costPerKg();
     tOrder.costPerKg(456);
+    {
+        Bid bid;
+        bid.bidder(tUser);
+        bid.quantity(132);
+        bid.biddingPrice(34);
+        bid.status("PENDING");
+
+        tOrder.assignBid(bid);
+    }
+    {
+        Bid bid;
+        bid.bidder(tUser);
+        bid.quantity(666);
+        bid.biddingPrice(99);
+        bid.status("ACCEPTED");
+
+        tOrder.assignBid(bid);
+    }
 
     ASSERT_TRUE(orderDbo.update(tOrder));
 
     auto order = orderDbo.fetch(tOrder);
+    // ASSERT_TRUE(order.size() == 2);
 
     ASSERT_TRUE(order.costPerKg() == tOrder.costPerKg());
     ASSERT_FALSE(order.costPerKg() == old_costPerKg);
@@ -110,10 +127,10 @@ TEST(OrderCRUD_Test, TestRemove)
     Db->create_pool("mongodb://localhost:27017");
     MongoDBInfo dbInfo("test_farmer");
     auto db_client = Db->get_client();
-    OrderCRUD UserDbo(*db_client, dbInfo);
+    OrderCRUD userDbo(*db_client, dbInfo);
 
-    ASSERT_TRUE(UserDbo.remove(tOrder));
-    ASSERT_FALSE(!UserDbo.fetch(tOrder).getId().empty());
+    ASSERT_TRUE(userDbo.remove(tOrder));
+    ASSERT_FALSE(!userDbo.fetch(tOrder).getId().empty());
 }
 
 // TEST(OrderCRUD_Test, TestFetchMany)

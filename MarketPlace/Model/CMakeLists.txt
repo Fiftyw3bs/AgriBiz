@@ -6,9 +6,9 @@
 
 # Optionally glob, but only for CMake 3.12 or later:
 # file(GLOB M_HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Model/include")
-set(MODEL_PATH "${PROJECT_SOURCE_DIR}/MarketPlace/Model/")
-file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${MODEL_PATH}/include")
-file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${MODEL_PATH}/src/*.cpp")
+set(MODEL_PATH "${PROJECT_SOURCE_DIR}/Model/")
+file(GLOB P_HEADER_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Model/include")
+file(GLOB SOURCE_LIST CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/Model/src/*.cpp")
 # set(HEADER_LIST "${ModernCMakeExample_SOURCE_DIR}/include/modern/lib.hpp")
 
 # Make an automatic library - will be static or dynamic based on user setting

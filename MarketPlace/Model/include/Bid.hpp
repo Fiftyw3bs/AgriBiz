@@ -14,10 +14,6 @@ namespace demystify
 {
 namespace AgriBiz
 {
-namespace persistence
-{
-    class BidCRUD;
-}
 
 class Order;
 
@@ -31,7 +27,8 @@ enum class BidStatus
     PENDING,
     ACCEPTED,
     DECLINED,
-    SUSPENDED
+    SUSPENDED,
+    COMPLETED
 };
 
 class Bid : public Identifiable, public Datable
@@ -43,11 +40,10 @@ private:
     BidStatus _status = BidStatus::PENDING;
 
     friend class Order; // Needed to set Bid status
-    friend class BidCRUD; // Needed to set Bid status
 public:
     Bid();
     Bid(const float& biddingPrice, const float& quantity, const User& bidder);
-    
+
     const float biddingPrice() const;
     const float quantity() const;
     const User& bidder() const;
@@ -59,12 +55,12 @@ public:
     void quantity(const float& quantity);
     void bidder(const User& bidder);
     void status(const std::string& status);
-    
+
     // ~Bid();
 };
 
 } // namespace AgriBiz
-    
+
 } // namespace demystify
 
 

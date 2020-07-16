@@ -63,6 +63,9 @@ const std::string Bid::status(StringOutput) const
     case BidStatus::SUSPENDED:
         status = "SUSPENDED";
         break;
+    case BidStatus::COMPLETED:
+        status = "COMPLETED";
+        break;
     }
 
     return status;
@@ -72,8 +75,8 @@ void Bid::status(const std::string& status)
     if (status == "PENDING")
     {
         this->_status = BidStatus::PENDING;
-    } 
-    else if (status == "COMPLETED")
+    }
+    else if (status == "ACCEPTED")
     {
         this->_status = BidStatus::ACCEPTED;
     }
@@ -84,5 +87,9 @@ void Bid::status(const std::string& status)
     else if (status == "SUSPENDED")
     {
         this->_status = BidStatus::SUSPENDED;
+    }
+    else if (status == "COMPLETED")
+    {
+        this->_status = BidStatus::COMPLETED;
     }
 }

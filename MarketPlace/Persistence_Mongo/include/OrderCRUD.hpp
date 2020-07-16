@@ -30,7 +30,6 @@ class OrderCRUD : public GenericCRUD<Order, JsonConversion::OrderAsJSON, JsonCon
 {
 public:
     OrderCRUD(mongocxx::client& client_, const MongoDBInfo dbInfo);
-    bool assignBid(const Bid& bid, const Order& Order);
     // VectorOf<Order> fetch(const std::string& orderStatus, const Offset& offset, const Limit& limit);
     // // VectorOf<Order> fetch(const Order& order, const Offset& offset, const Limit& limit);
     // // Order fetch(const Order& order);

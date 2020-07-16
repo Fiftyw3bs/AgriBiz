@@ -40,8 +40,8 @@ std::string JsonConversion::OrderAsJSON(const Order& order)
 
         for (auto &&bidPtr : bids)
         {
-            auto bid = bidPtr.lock();
-            bids_array[bid_count++] = web::json::value::parse(JsonConversion::BidAsJSON(*bid));
+            // auto bid = bidPtr.lock();
+            bids_array[bid_count++] = web::json::value::parse(JsonConversion::BidAsJSON(*bidPtr));
         }
 
         result[U("bids")] = bids_array;
@@ -82,7 +82,10 @@ Order JsonConversion::OrderFromJSON(std::string json)
         {
             for (size_t count = 0; count < orderJson.at("bids").size(); count++)
             {
-                auto bidPtr = MakePointerOf<Bid>(JsonConversion::BidFromJSON(orderJson.at("bids")[count].serialize()));
+                auto bids = orderJson.at("bids");
+                auto bidJson = bids.at(count).serialize();
+                auto bid = JsonConversion::BidFromJSON(bidJson);
+                auto bidPtr = MakePointerOf<Bid>(bid);
                 order.addSubscriber(bidPtr);
             }
         }
